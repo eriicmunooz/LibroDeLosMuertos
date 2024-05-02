@@ -1,1 +1,0 @@
-print("Gerard te quiero")
