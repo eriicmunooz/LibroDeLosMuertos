@@ -1,85 +1,90 @@
 class Diccionario:
     """
-    Clase que representa un diccionario dinámico.
+    Clase per definir un diccionari.
     """
 
     def __init__(self):
         """
-        Inicializa el diccionario.
+        Inicialitzem el diccionari i cridem la instància de la clase de diccionari
         """
-        self.diccionario = {}
+        self.vocabulario = {}
 
-    def agregar_palabra(self, palabra, entradas):
+    def agregar_palabra(self, paraula, entrada):
         """
-        Agrega una palabra al diccionario con sus entradas.
+        Funció per afegir paraules al diccionari vinculades a una entrada.
 
-        Args:
-            palabra (str): La palabra que se va a agregar.
-            entradas (dict): Un diccionario que contiene las entradas de la palabra.
-
-        Returns:
-            None
+        Variables:
+        paraula (string): La palabra que s'introduirà.
+        entrada (string): La entrada que fa referència a la paraula, com una descripció..
         """
-        self.diccionario[palabra] = entradas
+        if paraula in self.vocabulario:
+            self.vocabulario[paraula].append(entrada)
+        else:
+            self.vocabulario[paraula] = [entrada]
 
     def mostrar_palabras(self):
         """
-        Muestra todas las palabras del diccionario.
-
-        Returns:
-            None
+        Mostra les paraules que has introduit en el sistema dle diccionari.
         """
-        for palabra in self.diccionario:
-            print(palabra)
+        print("Paraules actuals del diccionari:")
+        for paraula in self.vocabulario:
+            print("--> ", paraula)
 
-    def mostrar_entradas(self, palabra):
+    def mostrar_entradas(self, paraula):
         """
-        Muestra todas las entradas de una palabra específica.
+        Mostra les paraules amb la seva 
 
-        Args:
-            palabra (str): La palabra de la que se mostrarán las entradas.
-
-        Returns:
-            None
+        Variables:
+        paraula (string): La palabra de la cual mostrar las entradas.
         """
-        if palabra in self.diccionario:
-            entradas = self.diccionario[palabra]
-            for entrada, definicion in entradas.items():
-                print(f"{entrada}: {definicion}")
+        if paraula in self.vocabulario:
+            print("Entrades per la paraula '{}' :".format(paraula))
+            for entrada in self.vocabulario[paraula]:
+                print("-", entrada)
         else:
-            print("La palabra no está en el diccionario.")
+            print("La paraula '{}' no hi és en el diccionari, prova un altre.".format(paraula))
 
-    def modificar_contenido(self, palabra, entradas_nuevas):
+    def modificar_entrada(self, paraula, i, novaEntrada):
         """
-        Modifica el contenido de una palabra en el diccionario.
+        Selecciona una entrada mitjançant l'index i demana la nova entrada.
 
-        Args:
-            palabra (str): La palabra cuyo contenido se va a modificar.
-            entradas_nuevas (dict): Un diccionario que contiene las nuevas entradas de la palabra.
-
-        Returns:
-            None
+        Variables:
+        paraula (string): Paraula que vols modificar
+        i (integer): Index de l'entrada.
+        novaEntrada (string): La nova entrada a introduir al sistema dle diccionari.
         """
-        if palabra in self.diccionario:
-            self.diccionario[palabra].update(entradas_nuevas)
+        if paraula in self.vocabulario and i < len(self.vocabulario[paraula]):
+            self.vocabulario[paraula][i] = novaEntrada
+            print("La entrada '{}' per la paraula '{}' ha sigut modificada amb èxit.".format(novaEntrada, paraula))
         else:
-            print("La palabra no está en el diccionario.")
+            print("No s'ha pogut modificar la entrada. La paraula '{}' no existeix".format(paraula))
 
-    def eliminar_contenido(self, palabra, entrada):
+    def eliminar_paraula(self, paraula):
         """
-        Elimina una entrada específica de una palabra en el diccionario.
+        Elimina una paraula amb la seva entrada corresponent.
 
-        Args:
-            palabra (str): La palabra de la que se va a eliminar una entrada.
-            entrada (str): La entrada que se va a eliminar.
-
-        Returns:
-            None
+        Parameters:
+        paraula (string): La palabra que vols suprimir.
         """
-        if palabra in self.diccionario:
-            if entrada in self.diccionario[palabra]:
-                del self.diccionario[palabra][entrada]
-            else:
-                print("La entrada no está en la palabra.")
+        if paraula in self.vocabulario:
+            del self.vocabulario[paraula]
+            print("La palabra '{}' ha sigut suprimida amb èxit.".format(paraula))
         else:
-            print("La palabra no está en el diccionario.")
+            print("La palabra '{}' no hi és en el diccionari.".format(paraula))
+
+    def eliminar_entrada(self, paraula, i):
+        """
+        Elimina una entrada introduida mitjançant un index buscant la posició.
+
+        Parameters:
+        paraula (string): La paraula que conté la entrada.
+        i (integer): L'index on es troba l'entrada.
+        """
+        if paraula in self.vocabulario and i < len(self.vocabulario[paraula]):
+            del self.vocabulario[paraula][i]
+            print("La entrada en la posició {} per la paraula '{}' ha sigut suprimida amb èxit.".format(i, paraula))
+        else:
+            print("No s'ha pogut eliminar l'entrada. La paraula '{}' no existeix.".format(paraula))
+
+
+
